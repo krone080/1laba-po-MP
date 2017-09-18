@@ -5,12 +5,14 @@
 class Quad_Eq
  {
  public:
-  Quad_Eq(a=0,b=0,c=0);
+  Quad_Eq(double a=0,double b=0,double c=0);
   void input();
-  void solve();
-  ostream& operator<<(ostream& cout);
+  double root(int i=1);
+  unsigned read_n()
+   {return n;}
  private:
-  double* coefs,roots;
+  double coefs[3];
+  unsigned n;
  };
 
 #endif // QUAD_EQ_H

@@ -1,4 +1,6 @@
 #include "quad_eq.h"
+#include <cmath>
+#include <iostream>
 
 namespace
  {
@@ -6,44 +8,57 @@ namespace
   {
   return b*b-4*a*c;
   }
- }
 
-Quad_Eq::Quad_Eq(a,b,c)
- :a(a),b(b),c(c)
- {};
-Quad_Eq::input()
- {
- std::cout>>"Input all coefficients of quadratic equation:";
- std::size_t i=1;
- while(i<=2)
- std::cout>>"/nc">>;
- if(!std::cin>>a)
-  std::cerr<<"Invalid coeficient, try again:";   //Проверка ввода
- }
-Quad_Eq::solve()
- {
- delete roots;
- double D=discr(a,b,c);
- unsigned n;
- if(D>0)
-  n=2;
- else
+ unsigned num_of_roots(double a, double b, double c)
   {
-  if(D=0)
-   n=1;
-  else
-   n=0;
+  double D=discr(a,b,c);
+  if(D>0)
+   return 2;
+  if(D==0)
+   return 1;
+  return 0;
   }
- if(n=0)
-  return;
- roots=new double[n];                     // Проверка кол-ва корней
- roots[1]=(b+std::sqrt(D))/(2*a);
- roots[2]=(b-std::sqrt(D))/(2*a);
- return;
- }
-Quad_Eq::operator<<(ostream& cout)
- {
- cout<<roots[1]<<','<<roots[2];//Сколько корней выводить?
- return cout;
  }
 
+Quad_Eq::Quad_Eq(double a, double b, double c)
+ {
+ coefs[0]=a;
+ coefs[1]=b;
+ coefs[2]=c;
+ n=num_of_roots(a,b,c);
+ }
+
+void Quad_Eq::input()
+ {
+ std::cout<<"Input all coefficients of quadratic equation:\n";
+ unsigned i=0;
+ char c='a'-1;
+ while(i<=2)
+  {
+  ++c;
+  again:
+  std::cout<<c<<'=';
+  if(!(std::cin>>coefs[i])||coefs[0]==0)
+   {
+   std::cerr<<"Invalid coeficient, try again:\n";   //Проверка ввода
+   goto again;
+   }
+  ++i;
+  }
+ n=num_of_roots(coefs[0],coefs[1],coefs[2]);
+ }
+
+double Quad_Eq::root(int i)
+ {
+ if(n==0)
+  {
+  std::cout<<"This equation has no roots";
+  return 0;
+  }
+ if(i==1&&coefs[0]!=0)
+  return (-coefs[1]+std::sqrt(discr(coefs[0],coefs[1],coefs[2])))/(2*coefs[0]);                    // Проверка кол-ва корней
+ if(i==2&&n>1&&coefs[0]!=0)
+  return (-coefs[1]-std::sqrt(discr(coefs[0],coefs[1],coefs[2])))/(2*coefs[0]);
+ std::cout<<"Invalid root index";
+ return 0;
+ }
