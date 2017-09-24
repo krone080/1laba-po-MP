@@ -33,7 +33,7 @@ void Quad_Eq::input()
    {
    bool s=cin.rdstate();
    cin.clear();
-   bool s=cin.rdstate();
+   s=cin.rdstate();
    cerr<<"Invalid coeficient, try again:\n";
    --c;
    continue;

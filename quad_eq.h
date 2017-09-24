@@ -6,7 +6,7 @@ class Quad_Eq
  {
  public:
   Quad_Eq(const double& a=0,const double& b=0,const double& c=0);
-  bool input();
+  void input();
   double root(int i=1);
   unsigned numOfRoots();
  private:
