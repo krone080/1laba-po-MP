@@ -21,12 +21,15 @@ bool Quad_Eq::input()
  while(i<=2)
   {
   ++c;
-  cout<<c<<'=';
+   cout<<c<<'=';
 // Validation of successful input
-  if(!(cin>>coefs[i])||coefs[0]==0)
+  if(!(cin>>coefs[i])||cin.peek()!='\n')
    {
-   cerr<<"Invalid coeficient\n";
-   return 0;
+   cin.clear();
+   _flushall();
+   cerr<<"Invalid coefficient\n";
+   c--;
+   continue;
    }
   ++i;
   }
@@ -36,6 +39,14 @@ bool Quad_Eq::input()
 double Quad_Eq::root(int i)
  {
  unsigned n=numOfRoots();
+ if(n==3&&coefs[2]==0)
+  {
+  cout<<"This equation has an infinite number of roots";
+  return 0;
+  }
+ // a==0;b!=0;
+ if(coefs[0]==0)
+  return -coefs[2]/coefs[1];
  if(n==0)
   {
   cout<<"This equation has no roots";
@@ -51,6 +62,18 @@ double Quad_Eq::root(int i)
 
 unsigned Quad_Eq::numOfRoots()
  {
+ if(coefs[0]==0)
+  {
+  if(coefs[1]==0)
+   {
+   if(coefs[2]==0)
+    return 3;      // 3 means an infinite number
+   else
+    return 0;
+   }
+  else
+   return 1;
+  }
  double D=discr(coefs);
  if(D>0)
   return 2;

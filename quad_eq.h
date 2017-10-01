@@ -10,7 +10,7 @@ class Quad_Eq
  {
  public:
 // Default constructor
-  Quad_Eq()=default;
+// Quad_Eq()=default;
 
 // Member function for an assignment a value to every coefficient of
 // quadratic equation by user input. When input was without fails,
